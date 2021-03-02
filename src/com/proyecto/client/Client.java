@@ -1,6 +1,7 @@
 package com.proyecto.client;
 
 import com.proyecto.gui.Gui;
+import com.proyecto.utils.Utilities;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,7 +10,7 @@ import java.net.Socket;
 
 public class Client extends Thread {
 
-    private final String host = "172.16.16.229";
+    private final String host = "127.0.0.1";
     private final int port = 2121;
     private final Gui gui = new Gui();
     protected Socket sk;
@@ -66,20 +67,56 @@ public class Client extends Thread {
             option = gui.mainMenu(name);
             try {
                 dos.writeUTF(Integer.toString(option));
-                response = dis.readUTF();
+                checkOption(option);
             } catch (IOException e) {
-            }
-            if (!response.isEmpty()) {
-                System.out.println(response);
-            } else {
-                if (option == 8) {
-                    System.out.println("Saliendo.....");
-                } else {
-                    System.out.println("Error ocurried...");
-                }
             }
         }
         disconnect();
+    }
+
+    public void checkOption(int op) {
+        switch (op) {
+            case 1:
+                System.out.println("Mostrando datos de las empresas...");
+                try {
+                    System.out.println(dis.readUTF());
+                } catch (IOException e) {
+                    disconnect();
+                }
+                break;
+            case 2:
+                System.out.println("Mostrando datos de los clientes...");
+                try {
+                    System.out.println(dis.readUTF());
+                } catch (IOException e) {
+                    disconnect();
+                }
+                break;
+            case 3:
+                break;
+            case 4:
+                try {
+                    System.out.println(dis.readUTF());
+                    dos.writeUTF(Utilities.getString());
+                    System.out.println("Mostrando todas las acciones de este cliente...");
+                    System.out.println(dis.readUTF());
+                } catch (IOException e) {
+                    disconnect();
+                }
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                System.out.println("Saliendo...");
+                break;
+            default:
+                break;
+
+        }
     }
 
     public void disconnect() {
