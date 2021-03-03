@@ -111,12 +111,14 @@ public class Client extends Thread {
                     dos.writeUTF(Utilities.getString());
                     //Respuesta
                     String response = dis.readUTF();
-                    dos.writeUTF("OK");
-                    System.out.print(dis.readUTF());
                     if (response.equals("NO AVAILABLE")) {
+                        dos.writeUTF("OK");
+                        System.out.print(dis.readUTF());
                         dos.writeUTF(Utilities.getString());
+                        System.out.println(dis.readUTF());
+                    } else {
+                        System.out.println(dis.readUTF());
                     }
-                    System.out.println(dis.readUTF());
                 } catch (IOException e) {
                     disconnect();
                 }
