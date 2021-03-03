@@ -116,6 +116,8 @@ public class Client extends Thread {
                         System.out.print(dis.readUTF());
                         dos.writeUTF(Utilities.getString());
                         System.out.println(dis.readUTF());
+                    } else if (response.equals("AVAILABLE")) {
+                        System.out.println(dis.readUTF());
                     } else {
                         System.out.println(dis.readUTF());
                     }
