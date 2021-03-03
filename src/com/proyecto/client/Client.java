@@ -10,7 +10,7 @@ import java.net.Socket;
 
 public class Client extends Thread {
 
-    private final String host = "127.0.0.1";
+    private final String host = "172.16.16.229";
     private final int port = 2121;
     private final Gui gui = new Gui();
     protected Socket sk;
@@ -93,10 +93,37 @@ public class Client extends Thread {
                 }
                 break;
             case 3:
+                try {
+                    System.out.println("Mostrando clientes...");
+                    System.out.println(dis.readUTF());
+                    dos.writeUTF("OK");
+                    System.out.println("Mostrando empresas...");
+                    System.out.println(dis.readUTF());
+                    dos.writeUTF("OK");
+                    //id cliente
+                    System.out.print(dis.readUTF());
+                    dos.writeUTF(Utilities.getString());
+                    //id empresa
+                    System.out.print(dis.readUTF());
+                    dos.writeUTF(Utilities.getString());
+                    //n acciones
+                    System.out.print(dis.readUTF());
+                    dos.writeUTF(Utilities.getString());
+                    //Respuesta
+                    String response = dis.readUTF();
+                    dos.writeUTF("OK");
+                    System.out.print(dis.readUTF());
+                    if (response.equals("NO AVAILABLE")) {
+                        dos.writeUTF(Utilities.getString());
+                    }
+                    System.out.println(dis.readUTF());
+                } catch (IOException e) {
+                    disconnect();
+                }
                 break;
             case 4:
                 try {
-                    System.out.println(dis.readUTF());
+                    System.out.print(dis.readUTF());
                     dos.writeUTF(Utilities.getString());
                     System.out.println("Mostrando todas las acciones de este cliente...");
                     System.out.println(dis.readUTF());
@@ -105,10 +132,38 @@ public class Client extends Thread {
                 }
                 break;
             case 5:
+                try {
+                    System.out.print(dis.readUTF());
+                    dos.writeUTF(Utilities.getString());
+                    System.out.println("Mostrando todas las acciones compradas a esta empresa...");
+                    System.out.println(dis.readUTF());
+                } catch (IOException e) {
+                    disconnect();
+                }
                 break;
             case 6:
+                try {
+                    System.out.println("Mostrando empresas...");
+                    System.out.println(dis.readUTF());
+                    dos.writeUTF("OK");
+                    System.out.print(dis.readUTF());
+                    dos.writeUTF(Utilities.getString());
+                    System.out.println(dis.readUTF());
+                } catch (IOException e) {
+                    disconnect();
+                }
                 break;
             case 7:
+                try {
+                    System.out.println("Mostrando clientes...");
+                    System.out.println(dis.readUTF());
+                    dos.writeUTF("OK");
+                    System.out.print(dis.readUTF());
+                    dos.writeUTF(Utilities.getString());
+                    System.out.println(dis.readUTF());
+                } catch (IOException e) {
+                    disconnect();
+                }
                 break;
             case 8:
                 System.out.println("Saliendo...");
